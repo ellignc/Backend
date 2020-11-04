@@ -16,10 +16,9 @@ exports.build = async (opts = {logger: true, trustProxy: true}) => {
 
         /**
          *  @param {*} req - this is the request parameter that is sent by the client
+         *  handles the request for a given route
          */
         handler: async (req) => {
-            console.log('Hello World!!!');
-
             // this is the response in JSON
             return {success: true}
         }
