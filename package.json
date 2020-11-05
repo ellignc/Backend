@@ -10,7 +10,8 @@
   "author": "Elli",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^3.7.0"
+    "fastify": "^3.7.0",
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.6",
