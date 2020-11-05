@@ -1,0 +1,11 @@
+{
+  "todos": [
+    {
+      "id": "e48aa9f1-8100-4226-9b87-8818419a351b",
+      "text": "This is a todo",
+      "done": false,
+      "dateCreated": 1604586299515,
+      "dateUpdated": 1604586299515
+    }
+  ]
+}
