@@ -4,7 +4,7 @@
   "description": "Backend basics",
   "main": "index.js",
   "scripts": {
-    "test": "npx tap",
+    "test": "npx tap --reporting=spec",
     "start": "npx nodemon"
   },
   "author": "Elli",
