@@ -2,8 +2,8 @@ const { getTodos } = require('../../lib/get-todos');
 const { writeFileSync } = require('fs');
 const { join } = require('path');
 const { build } = require('../../app');
+const should = require('should');
 require('tap').mochaGlobals();
-require('should');
 
 describe('For the route for creating a todo POST: (/todo)', () => {
     let app;
@@ -13,7 +13,9 @@ describe('For the route for creating a todo POST: (/todo)', () => {
 
     before(async () => {
         //initialize the backend application
-        app = await build();
+        app = await build({
+            logger: false
+        });
     });
 
     after(async () => {
@@ -32,7 +34,7 @@ describe('For the route for creating a todo POST: (/todo)', () => {
         }
     });
     
-    
+    // happy path
     it('it should return {sucess: true, data: (new todo object)} and has a statusCode of 200 when called using POST', async () => {
         const response = await app.inject({
             method: 'POST',
@@ -96,4 +98,38 @@ describe('For the route for creating a todo POST: (/todo)', () => {
     });
 
 
+    // non-happy path
+    it('it should return {sucess: false, message: error message } and has a statusCode of 400 when called using POST and there is no text', async () => {
+        const response = await app.inject({
+            method: 'POST',
+            url: '/todo',
+            payload: {
+                done: true
+            }
+        });
+
+        const payload = response.json();
+        const { statusCode } = response;
+        const { success, message } = payload;
+
+        statusCode.should.equal(400);
+        success.should.equal(false);
+        should.exist(message);
+    })
+
+    // another non-happy path
+    it('it should return {sucess: false, message: error message } and has a statusCode of 400 when called using POST and there is no payload', async () => {
+        const response = await app.inject({
+            method: 'POST',
+            url: '/todo'
+        });
+
+        const payload = response.json();
+        const { statusCode } = response;
+        const { success, message } = payload;
+
+        statusCode.should.equal(400);
+        success.should.equal(false);
+        should.exist(message);
+    })
 });
