@@ -13,9 +13,7 @@ describe('For the route for creating a todo POST: (/todo)', () => {
 
     before(async () => {
         //initialize the backend application
-        app = await build({
-            logger: false
-        });
+        app = await build();
     });
 
     after(async () => {
@@ -57,7 +55,7 @@ describe('For the route for creating a todo POST: (/todo)', () => {
        
         const todos = getTodos(filename, encoding);
         const index = todos.findIndex(todo => todo.id === id);
-        index.should.not.be.equal(-1);
+        index.should.not.equal(-1);
         const { text: textDatabase, done: doneDatabase } = todos[index];
         text.should.equal(textDatabase);
         done.should.equal(doneDatabase);

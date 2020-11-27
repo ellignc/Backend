@@ -7,9 +7,7 @@ describe('For the route for root (/)', () => {
 
     before(async () => {
         //initialize the backend application
-        app = await build({
-            logger: false
-        });
+        app = await build();
     })
     
     it('it should return {sucess: true} and has the statusCode of 200 when called using GET', async () => {
