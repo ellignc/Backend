@@ -5,7 +5,7 @@ const { v4: uuid } = require('uuid');
  * @param {import('mongoose').Mongoose} mongoose 
  */
 module.exports = (mongoose) => {
-    const {Schema} = mongoose;
+    const { Schema } = mongoose;
 
     const todoSchema = new Schema({
         id: {

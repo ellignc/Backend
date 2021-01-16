@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-// setup a connect configuration to the mongodb instance
-mongoose.connect('mongodb://localhost:27017/test', {
+// setup a connection configuration to the mongodb instance
+mongoose.connect('mongodb://localhost:27017/todo-cmsc100', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
