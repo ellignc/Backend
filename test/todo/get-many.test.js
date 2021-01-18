@@ -186,4 +186,35 @@ describe('For the route for getting many todos GET: (/todo)', () => {
         // the last data should be equal to the picked id
         data[data.length - 1].id.should.equal(id);
     });
+
+    it('it should return { sucess: true, data: array of todos } and has a statusCode of 200 when called using GET and has a default limit of 3 items and it should be in descending order where the last item is updated on or before endDate', async () => {
+        const id = ids[parseInt(Math.random() * ids.length)];
+
+        const { dateUpdated: endDate } = await Todo
+            .findOne({ id })
+            .exec();
+
+        const response = await app.inject({
+            method: 'GET',
+            url: `/todo?endDate=${endDate}`
+        });
+
+        const payload = response.json();
+        const { statusCode } = response;
+        const { success, data } = payload;
+
+        success.should.equal(true);
+        statusCode.should.equal(200);
+        (data.length <= 3).should.equal(true);
+               
+        for (let i = 0; i < data.length - 1; i++) {
+            const prevTodo = data[i];
+            const nextTodo = data[i + 1];
+
+            (nextTodo.dateUpdated < prevTodo.dateUpdated).should.equal(true);
+        }
+        
+        // the last data should be equal to the picked id
+        data[0].id.should.equal(id);
+    });
 });
