@@ -5,6 +5,20 @@ const UniqueIDData = {
     example: '1325cff1-8f82-46f6-843a-ceaf6d571248'
 };
 
+const UsernameData = {
+    type: 'string',
+    description: 'A unique username',
+    value: 'ellignc',
+    example: 'ellignc'
+}
+
+const PasswordData = {
+    type: 'string',
+    description: 'Password string',
+    value: 'password12345',
+    example: 'password12345'
+}
+
 const TextData = {
     type: 'string',
     description: 'Any textual string',
@@ -84,6 +98,26 @@ const GetOneTodoParams = {
     }
 }
 
+const UserFullData = {
+    type: 'object',
+    description: 'User data for response without the password',
+    properties: {
+        username: UsernameData,
+        dateUpdated: DateData,
+        dateCreated: DateData
+    }
+}
+
+const GetOneUserResponse = {
+    type: 'object',
+    description: 'Returns a user',
+    required: ['success', 'data'],
+    properties: {
+        success: SuccessData,
+        data: UserFullData
+    }
+}
+
 const GetManyTodoResponse = {
     type: 'object',
     description: 'Returns a list of todos',
@@ -91,6 +125,19 @@ const GetManyTodoResponse = {
     properties: {
         success: SuccessData,
         data: TodoListData
+    }
+}
+
+const PostUserRequest = {
+    type: 'object',
+    description: 'User object data for creation',
+    required: [
+        'username',
+        'password'
+    ],
+    properties: {
+        username: UsernameData,
+        password: PasswordData,
     }
 }
 
@@ -132,5 +179,7 @@ exports.definitions = {
     GetOneTodoParams,
     GetOneTodoResponse,
     PostTodoRequest,
-    PutTodoRequest
+    PutTodoRequest,
+    PostUserRequest,
+    GetOneUserResponse
 }
