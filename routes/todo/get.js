@@ -32,12 +32,7 @@ exports.get = app => {
 
             if (!data) {
                 return response
-                    .code(404)
-                    .send({
-                        success: false,
-                        code: 'todo/not-found',
-                        message: 'Todo doesn\'t exist'
-                    });
+                    .notFound('todo/not-found')
             }
         
             return {
