@@ -1,4 +1,6 @@
 const { Todo } = require('../../db');
+const { definitions } = require('../../definitions');
+const { GetOneTodoResponse, PostTodoRequest } = definitions;
 
 /**
  *  this is the route for creating todo's
@@ -7,6 +9,15 @@ const { Todo } = require('../../db');
  */
 exports.create = app => {
     app.post('/todo', {
+        schema: {
+            description: 'Create one todo',
+            tags: ['Todo'],
+            summary: 'Create one todo',
+            body: PostTodoRequest,
+            response: {
+                200: GetOneTodoResponse
+            }
+        },
         /**
          *  handles the request for a given route
          * 
@@ -17,17 +28,17 @@ exports.create = app => {
             const {body} = request;
             // get text and done with default false from body, regardless if it has
             // an object value or null, which makes it return an empty object.
-            const { text, done = false } = body || {};
+            const { text, done = false } = body;
 
-            if(!text) {
-                return response
-                .code(400)
-                .send({
-                    success: false,
-                    code: 'todo/malformed',
-                    message: 'Payload doesn\'t have text property'
-                });
-            }
+            // if(!text) {
+            //     return response
+            //     .code(400)
+            //     .send({
+            //         success: false,
+            //         code: 'todo/malformed',
+            //         message: 'Payload doesn\'t have text property'
+            //     });
+            // }
 
             const data =  new Todo({
                 text,
