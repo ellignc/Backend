@@ -15,6 +15,7 @@
     "uuid": "^8.3.1"
   },
   "devDependencies": {
+    "fastify-swagger": "^3.5.0",
     "nodemon": "^2.0.6",
     "should": "^13.2.3",
     "tap": "^14.10.8"
