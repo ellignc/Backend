@@ -5,6 +5,13 @@ const UniqueIDData = {
     example: '1325cff1-8f82-46f6-843a-ceaf6d571248'
 };
 
+const JWTData = {
+    type: 'string',
+    description: 'A JSON Web Token',
+    value: 'password12345',
+    example: 'password12345'
+};
+
 const UsernameData = {
     type: 'string',
     description: 'A unique username',
@@ -172,6 +179,16 @@ const GetOneTodoResponse = {
     }
 }
 
+const LoginResponse = {
+    type: 'object',
+    description: 'Returns a JWT data',
+    required: ['success', 'data'],
+    properties: {
+        success: SuccessData,
+        data: JWTData
+    }
+}
+
 exports.definitions = {
     SuccessResponse,
     GetManyTodoResponse,
@@ -181,5 +198,6 @@ exports.definitions = {
     PostTodoRequest,
     PutTodoRequest,
     PostUserRequest,
-    GetOneUserResponse
+    GetOneUserResponse,
+    LoginResponse
 }
