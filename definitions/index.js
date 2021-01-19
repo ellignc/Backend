@@ -8,8 +8,8 @@ const UniqueIDData = {
 const JWTData = {
     type: 'string',
     description: 'A JSON Web Token',
-    value: 'password12345',
-    example: 'password12345'
+    value: '1325cff1-8f82-46f6-843a-ceaf6d571248',
+    example: '1325cff1-8f82-46f6-843a-ceaf6d571248'
 };
 
 const UsernameData = {
