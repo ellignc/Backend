@@ -8,6 +8,7 @@ const { GetOneTodoResponse, GetOneTodoParams } = definitions;
  *  @param {*} app
  */
 exports.get = app => {
+   
     app.get('/todo/:id', {
         schema: {
             description: 'Get one todo',
@@ -16,8 +17,17 @@ exports.get = app => {
             params: GetOneTodoParams,
             response: {
                 200: GetOneTodoResponse
-            }
+            },
+            security: [
+                {
+                    bearer: []
+                }
+            ]
         },
+        preHandler: app.auth([
+            app.verifyJWT
+        ]),
+
         /**
          *  This gets one todos from the database given a unique ID
          * 
@@ -25,10 +35,11 @@ exports.get = app => {
          *  @param {import('fastify').FastifyReply<Response>} response
          */
         handler: async (request, response) => {
-            const { params } = request;
+            const { params, user } = request;
+            const { username } = user;
             const { id } = params;
 
-            const data = await Todo.findOne({ id }).exec();
+            const data = await Todo.findOne({ id, username }).exec();
 
             if (!data) {
                 return response

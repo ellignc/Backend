@@ -4,9 +4,11 @@ const { GetOneTodoResponse, GetOneTodoParams, PutTodoRequest } = definitions;
 
 /**
  *  Updates one todo
+ * 
  *  @param {*} app
  */
 exports.update = app => {
+   
     app.put('/todo/:id', {
         schema: {
             description: 'Update one todo',
@@ -16,8 +18,16 @@ exports.update = app => {
             params: GetOneTodoParams,
             response: {
                 200: GetOneTodoResponse
-            }
+            },
+            security: [
+                {
+                    bearer: []
+                }
+            ]
         },
+        preHandler: app.auth([
+            app.verifyJWT
+        ]),
         /**
          *  This updates one todo from the database given a unique ID and a payload
          * 
@@ -25,7 +35,8 @@ exports.update = app => {
          *  @param {import('fastify').FastifyReply<Response>} response
          */
         handler: async (request, response) => {
-            const { params, body } = request;
+            const { params, body, user } = request;
+            const { username } = user;
             const { id } = params;
             // get text and done from body.
             const { text, done } = body;
@@ -36,7 +47,7 @@ exports.update = app => {
                     .badRequest('request/malformed')
             }
 
-            const oldData = await Todo.findOne({ id }).exec();
+            const oldData = await Todo.findOne({ id, username }).exec();
 
             if (!oldData) {
                 return response

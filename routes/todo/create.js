@@ -16,8 +16,16 @@ exports.create = app => {
             body: PostTodoRequest,
             response: {
                 200: GetOneTodoResponse
-            }
+            },
+            security: [
+                {
+                    bearer: []
+                }
+            ]
         },
+        preHandler: app.auth([
+            app.verifyJWT
+        ]),
         /**
          *  handles the request for a given route
          * 
@@ -25,14 +33,16 @@ exports.create = app => {
          *  @param {import('fastify').FastifyReply<Response>} response
          */
         handler: async (request, response) => {
-            const {body} = request;
+            const { body, user } = request;
             // get text and done with default false from body, regardless if it has
             // an object value or null, which makes it return an empty object.
             const { text, done = false } = body;
+            const { username } = user;
 
             const data =  new Todo({
                 text,
                 done,
+                username,
             });
 
             await data.save();

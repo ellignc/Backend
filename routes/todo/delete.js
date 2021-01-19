@@ -16,8 +16,16 @@ exports.deleteOne = app => {
             params: GetOneTodoParams,
             response: {
                 200: SuccessResponse
-            }
+            },
+            security: [
+                {
+                    bearer: []
+                }
+            ]
         },
+        preHandler: app.auth([
+            app.verifyJWT
+        ]),
         /**
         *  This deletes one todo from the database given a unique ID
         * 

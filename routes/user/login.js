@@ -40,6 +40,8 @@ exports.login = app => {
                 username
             })
             
+            request.session.token = data;
+            
             return{
                 success: true,
                 data
